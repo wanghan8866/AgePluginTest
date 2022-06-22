@@ -1,0 +1,4 @@
+name: AgePlugin
+version: '${project.version}'
+main: ageplugin.ageplugin.AgePlugin
+api-version: 1.18

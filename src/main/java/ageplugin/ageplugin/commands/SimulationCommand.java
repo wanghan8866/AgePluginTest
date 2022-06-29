@@ -121,17 +121,22 @@ public class SimulationCommand implements CommandExecutor {
 
         }else if(sender instanceof ConsoleCommandSender){
             if(args.length==1 && args[0].equalsIgnoreCase("start")){
-                this.agePlugin.getTeamManager().setIsStarted(true);
-                for(UUID id: agePlugin.getTeamManager().getTeams().keySet()){
-                    System.out.println(agePlugin.getTeamManager().getTeams().get(id));
-                    Player player=Bukkit.getPlayer(id);
-                    if(player!=null){
-                        agePlugin.getTeamManager().getTeams().get(id).onStart(player);
-                        player.closeInventory();
-                    }
+                if(!this.agePlugin.getTeamManager().getIsStarted()){
+                    this.agePlugin.getTeamManager().setIsStarted(true);
+                    for(UUID id: agePlugin.getTeamManager().getTeams().keySet()){
+                        System.out.println(agePlugin.getTeamManager().getTeams().get(id));
+                        Player player=Bukkit.getPlayer(id);
+                        if(player!=null){
+                            agePlugin.getTeamManager().getTeams().get(id).onStart(player);
+                            player.closeInventory();
+                        }
 
+                    }
+                    System.out.println("starting!");
+                }else{
+                    System.out.println("The event has already started!");
                 }
-                System.out.println("starting!");
+
 
             }else if(args.length==1 && args[0].equalsIgnoreCase("list")){
                 for(UUID id: agePlugin.getTeamManager().getTeams().keySet()){
@@ -139,6 +144,11 @@ public class SimulationCommand implements CommandExecutor {
 
 
                 }
+            }else if(args.length==1 && args[0].equalsIgnoreCase("end")){
+                agePlugin.getTeamManager().setIsStarted(false);
+            }
+            else{
+                System.out.println("no such command!");
             }
         }
 

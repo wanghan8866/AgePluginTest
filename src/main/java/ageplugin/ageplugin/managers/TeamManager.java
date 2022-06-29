@@ -23,14 +23,14 @@ import java.util.UUID;
 
 public class TeamManager {
     private HashMap<UUID, AbstractTeam> teams=new HashMap<>();
-    private  AgePlugin agePlugin;
+    private final AgePlugin agePlugin;
     private final int MAX_TEAM_COUNT=34;
     private boolean isStarted;
 
     public TeamManager(AgePlugin agePlugin){
 
         this.agePlugin=agePlugin;
-        isStarted=false;
+        isStarted=ConfigManager.getIsStarted();
 
 
     }
@@ -223,6 +223,15 @@ public class TeamManager {
     }
     public void setIsStarted(boolean isStarted){
         this.isStarted=isStarted;
+    }
+
+    public boolean checkType(UUID id, TeamType type){
+        if(teams.containsKey(id)){
+            if(teams.get(id).getType().equals(type)){
+                return true;
+            }
+        }
+        return false;
     }
 
 

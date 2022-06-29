@@ -18,7 +18,7 @@ public abstract class AbstractTeam implements Listener {
         this.type=type;
         this.uuid=uuid;
         this.agePlugin=agePlugin;
-        Bukkit.getPluginManager().registerEvents(this,agePlugin);
+//        Bukkit.getPluginManager().registerEvents(this,agePlugin);
     }
 
 
@@ -33,7 +33,7 @@ public abstract class AbstractTeam implements Listener {
     public abstract void onStart(Player player);
 
     public void remove(){
-        HandlerList.unregisterAll(this);
+//        HandlerList.unregisterAll(this);
 
     }
 

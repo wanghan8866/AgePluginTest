@@ -1,2 +1,3 @@
 simulation:
   isStarted: true
+  maxTeamMemberCap: 35

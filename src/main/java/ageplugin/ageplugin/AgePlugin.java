@@ -21,7 +21,6 @@ public final class AgePlugin extends JavaPlugin  {
     @Override
     public void onEnable() {
         // Plugin startup
-
         ConfigManager.setupConfig(this);
         teamManager=new TeamManager(this);
         teamsFileManager=new FileManager(this,"teams.yml");
@@ -50,9 +49,11 @@ public final class AgePlugin extends JavaPlugin  {
         // Plugin shutdown logic
         teamsFileManager.writeTeams(teamManager.getTeams());
         ConfigManager.setIsStarted(teamManager.getIsStarted());
+//        ConfigManager.setMaxNumberPerTeam(teamManager.getMaxTeamCount());
 
         this.getTeamManager().removeAll();
-        this.saveConfig();
+//        this.saveConfig();
+
 
 
     }

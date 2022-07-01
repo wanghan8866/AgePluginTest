@@ -52,64 +52,93 @@ public class SimulationCommand implements CommandExecutor {
 //                }
             }
             else if(args.length==3 && args[0].equalsIgnoreCase("team") &&args[1].equalsIgnoreCase("join")){
-                String typeName=args[2];
-                joinTeam(player, typeName);
+                if(player.isOp()){
+                    String typeName=args[2];
+                    joinTeam(player, typeName);
+                }else{
+                    no_permission(player);
+                }
+
             }
             else if(args.length==4 && args[0].equalsIgnoreCase("team") &&args[1].equalsIgnoreCase("join") &&
                     Stream.of(TeamType.values()).map(e->e.getText().toLowerCase()).collect(Collectors.toList()).contains(args[2].toLowerCase())){
-
-                String typeName=args[2];
-                String playerName=args[3];
-                player=Bukkit.getPlayer(playerName);
-                if(player!=null){
-                    joinTeam(player, typeName);
+                if(player.isOp()){
+                    String typeName=args[2];
+                    String playerName=args[3];
+                    player=Bukkit.getPlayer(playerName);
+                    if(player!=null){
+                        joinTeam(player, typeName);
+                    }else{
+                        System.out.println(ChatColor.RED+"No such player online!");
+                    }
+                }else{
+                    no_permission(player);
                 }
+
 
             } // \simulation team
 
             // \simulation team remove
             else if(args.length==2 &&  args[0].equalsIgnoreCase("team") && args[1].equalsIgnoreCase("remove")){
-                agePlugin.getTeamManager().removeTeam(player.getUniqueId());
+                if(player.isOp()){
+                    agePlugin.getTeamManager().removeTeam(player.getUniqueId());
+                }else{
+                    no_permission(player);
+                }
+
             }
             else if(args.length==3 &&  args[0].equalsIgnoreCase("team") && args[1].equalsIgnoreCase("remove")){
-                String playerName=args[2];
-                player=Bukkit.getPlayer(playerName);
-                if(player!=null){
-                    agePlugin.getTeamManager().removeTeam(player.getUniqueId());
+                if(player.isOp()){
+                    String playerName=args[2];
+                    player=Bukkit.getPlayer(playerName);
+                    if(player!=null){
+                        agePlugin.getTeamManager().removeTeam(player.getUniqueId());
+                    }else{
+                        System.out.println(ChatColor.RED+"No such player online!");
+                    }
+                }else{
+                    no_permission(player);
                 }
+
 
             }
             else if(args.length==6  && args[0].equalsIgnoreCase("team") &&args[1].equalsIgnoreCase("teleport") &&
                     Stream.of(TeamType.values()).map(e->e.getText().toLowerCase()).collect(Collectors.toList()).contains(args[2].toLowerCase())){
-                try {
-                    double x=Integer.parseInt(args[3]);
-                    double y=Integer.parseInt(args[4]);
-                    double z=Integer.parseInt(args[5]);
-                    String typeName=args[2];
-                    TeamType type=null;
-                    if(typeName.equalsIgnoreCase(TeamType.FUTURE.name())){
-                    type=TeamType.FUTURE;
+                if(player.isOp()){
+                    try {
+                        double x=Integer.parseInt(args[3]);
+                        double y=Integer.parseInt(args[4]);
+                        double z=Integer.parseInt(args[5]);
+                        String typeName=args[2];
+                        TeamType type=null;
+                        if(typeName.equalsIgnoreCase(TeamType.FUTURE.name())){
+                            type=TeamType.FUTURE;
 
-                    }else if(typeName.equalsIgnoreCase(TeamType.PAST.name())){
-                        type=TeamType.PAST;
-                    }else if(typeName.equalsIgnoreCase(TeamType.PRESENT.name())){
-                        type=TeamType.PRESENT;
+                        }else if(typeName.equalsIgnoreCase(TeamType.PAST.name())){
+                            type=TeamType.PAST;
+                        }else if(typeName.equalsIgnoreCase(TeamType.PRESENT.name())){
+                            type=TeamType.PRESENT;
 
-                    }else if(typeName.equalsIgnoreCase(TeamType.ADMIN.name())){
-                        type=TeamType.ADMIN;
+                        }else if(typeName.equalsIgnoreCase(TeamType.ADMIN.name())){
+                            type=TeamType.ADMIN;
+                        }
+                        if(type!=null){
+                            this.agePlugin.getTeamManager().teleportTeam(type,new Location(player.getWorld(),x,y,z));
+                        }
+                        else{
+                            player.sendMessage(ChatColor.RED+"Invalid Team Type!");
+                        }
+
+
+                    }catch (NumberFormatException e){
+                        player.sendMessage(ChatColor.RED+"Wrong format for coordinates");
+
                     }
-                    if(type!=null){
-                        this.agePlugin.getTeamManager().teleportTeam(type,new Location(player.getWorld(),x,y,z));
-                    }
-                    else{
-                        player.sendMessage(ChatColor.RED+"Invalid Team Type!");
-                    }
-
-
-                }catch (NumberFormatException e){
-                    player.sendMessage(ChatColor.RED+"Wrong format for coordinates");
-
+                }else{
+                    no_permission(player);
+//                    System.out.println(ChatColor.RED+"You have no permission!");
                 }
+
 
             }
             else{
@@ -147,6 +176,10 @@ public class SimulationCommand implements CommandExecutor {
             }else if(args.length==1 && args[0].equalsIgnoreCase("end")){
                 agePlugin.getTeamManager().setIsStarted(false);
             }
+            else if(args.length==1 && args[0].equalsIgnoreCase("clear")){
+                agePlugin.getTeamManager().removeAll();
+                agePlugin.getTeamManager().getTeams().clear();
+            }
             else{
                 System.out.println("no such command!");
             }
@@ -156,7 +189,7 @@ public class SimulationCommand implements CommandExecutor {
     }
 
     private void joinTeam(Player player, String typeName) {
-        test();
+//        test();
 
         if(typeName.equalsIgnoreCase(TeamType.FUTURE.name())){
 //                    for (int i = 0; i < 100; i++) {
@@ -182,5 +215,9 @@ public class SimulationCommand implements CommandExecutor {
         agePlugin.getTeamManager().setTeam(UUID.fromString("1190f227-e21e-4113-8e63-4d7c8cd95183"),TeamType.FUTURE);
         agePlugin.getTeamManager().setTeam(UUID.fromString("1190f227-e21e-4113-8e63-4d7c8cd95184"),TeamType.PRESENT);
         agePlugin.getTeamManager().setTeam(UUID.fromString("1190f227-e21e-4113-8e63-4d7c8cd95185"),TeamType.ADMIN);
+    }
+
+    private void no_permission(Player player){
+        player.sendMessage(ChatColor.RED+"You have no permission!");
     }
 }

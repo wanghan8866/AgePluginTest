@@ -24,13 +24,14 @@ import java.util.UUID;
 public class TeamManager {
     private HashMap<UUID, AbstractTeam> teams=new HashMap<>();
     private final AgePlugin agePlugin;
-    private final int MAX_TEAM_COUNT=34;
+    private int MAX_TEAM_COUNT;
     private boolean isStarted;
 
     public TeamManager(AgePlugin agePlugin){
 
         this.agePlugin=agePlugin;
         isStarted=ConfigManager.getIsStarted();
+        MAX_TEAM_COUNT=ConfigManager.getMaxNumberPerTeam();
 
 
     }
@@ -42,11 +43,14 @@ public class TeamManager {
 
         if(player!=null){
             System.out.println("setting the team for online player");
-            player.performCommand("team leave "+player.getName());
+//            player.performCommand("team leave "+player.getName());
 
             player.sendMessage(ChatColor.GREEN+"Team is set"+ " type: "+type.getDisplay());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team leave "+player.getName());
+
             typeSelection(type, id);
-            player.performCommand("team join "+type.getText());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team join "+type.getText()+" "+player.getName());
+//            player.performCommand("team join "+type.getText());
             updateAllAdmin(type);
         }
         else{
@@ -209,7 +213,8 @@ public class TeamManager {
 
             }
             if(fromTeam){
-                player.performCommand("team leave "+player.getName());
+//                player.performCommand("team leave "+player.getName());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team leave "+player.getName());
             }
 
 

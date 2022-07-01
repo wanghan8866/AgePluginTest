@@ -36,34 +36,55 @@ public class SimulationTab implements TabCompleter {
                 results.add("team");
             }else if(args.length==2 && args[0].equals("team")){
                 results.add("join");
-                results.add("remove");
-                results.add("teleport");
-            }else if(args.length==3 && args[0].equals("team") && args[1].equals("remove")){
-                for(Player p:Bukkit.getOnlinePlayers()){
-                    results.add(p.getName());
+                if(player.isOp()){
+
+                    results.add("remove");
+                    results.add("teleport");
                 }
+            }else if(args.length==3 && args[0].equals("team") && args[1].equals("remove")){
+                if(player.isOp()){
+                    for(Player p:Bukkit.getOnlinePlayers()){
+                        results.add(p.getName());
+                    }
+                }
+
             }
             else if(args.length==3 && args[0].equals("team") && (args[1].equals("join")|args[1].equals("teleport"))){
-                for(TeamType type:TeamType.values()){
-                    results.add(type.getText());
+                if(player.isOp()){
+                    for(TeamType type:TeamType.values()){
+                        results.add(type.getText());
+                    }
                 }
+
             }
             else if(args.length==4 && args[0].equals("team") && args[1].equals("join") &&
                     Stream.of(TeamType.values()).map(e->e.getText().toLowerCase()).collect(Collectors.toList()).contains(args[2].toLowerCase())){
-                for(Player p:Bukkit.getOnlinePlayers()){
-                    results.add(p.getName());
+                if(player.isOp()){
+                    for(Player p:Bukkit.getOnlinePlayers()){
+                        results.add(p.getName());
+                    }
                 }
+
             }else if(args.length==4 && args[0].equals("team") && args[1].equals("teleport") &&
                     Stream.of(TeamType.values()).map(e->e.getText().toLowerCase()).collect(Collectors.toList()).contains(args[2].toLowerCase())){
-                results.add("x");
+                if(player.isOp()){
+                    results.add("x");
+                }
+
             }
             else if(args.length==5 && args[0].equals("team") && args[1].equals("teleport") &&
                     Stream.of(TeamType.values()).map(e->e.getText().toLowerCase()).collect(Collectors.toList()).contains(args[2].toLowerCase())){
-                results.add("y");
+                if(player.isOp()){
+                    results.add("y");
+                }
+
             }
             else if(args.length==6 && args[0].equals("team") && args[1].equals("teleport") &&
                     Stream.of(TeamType.values()).map(e->e.getText().toLowerCase()).collect(Collectors.toList()).contains(args[2].toLowerCase())){
-                results.add("z");
+                if(player.isOp()){
+                    results.add("z");
+                }
+
             }
 
         }

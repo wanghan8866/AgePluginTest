@@ -40,7 +40,7 @@
                1.   Creeper
                2.   Blaze
                3.   Slime
-          4. Plus one forture for meeting some ores  
+          4. Plus one fortune for meeting some ores  
              1.  redstone
              2.  lapis
              3.  coal   

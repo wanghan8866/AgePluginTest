@@ -31,7 +31,7 @@ public class PresentTeamListener implements Listener {
 
     @EventHandler
     public void onCraft(PrepareItemCraftEvent e){
-
+        // can not craft ENCHANTED_GOLDEN_APPLE
         Player player= (Player) e.getViewers().get(0);
         if(typeCheck(player.getUniqueId())){
             Recipe result = e.getRecipe();
@@ -48,6 +48,7 @@ public class PresentTeamListener implements Listener {
     }
     @EventHandler
     public void onCrossBowShoot(EntityShootBowEvent e){
+        // disable the use of advanced crossbow from the future.
         if(e.getEntity() instanceof Player){
             Player player=(Player)e.getEntity();
             if(typeCheck(player.getUniqueId())){
@@ -88,6 +89,7 @@ public class PresentTeamListener implements Listener {
 
     @EventHandler
     public void onEat(PlayerItemConsumeEvent e){
+        // disable drinking milk
         Player player=e.getPlayer();
         if(typeCheck(player.getUniqueId())){
             Material food=e.getItem().getType();

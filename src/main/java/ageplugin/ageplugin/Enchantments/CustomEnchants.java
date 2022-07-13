@@ -19,6 +19,7 @@ public class CustomEnchants {
 
 
     public static void register(){
+        // register new Enchantments
         boolean registered= Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(CROWN);
         if(!registered){
             registerEnchantment(CROWN);

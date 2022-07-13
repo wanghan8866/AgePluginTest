@@ -33,6 +33,7 @@ public final class AgePlugin extends JavaPlugin  {
         recipeKeysMap.put(TeamType.ADMIN,new ArrayList<>());
 
 
+        // create different singleton managers for each task
         ConfigManager.setupConfig(this);
         csvTeamManager=new CSVTeamManager(this,"teamTestSample.csv");
         teamManager=new TeamManager(this);
@@ -44,7 +45,7 @@ public final class AgePlugin extends JavaPlugin  {
         CustomEnchants.register();
 
 
-        //EVENTS
+        //EVENTS listeners
         Bukkit.getPluginManager().registerEvents(new GeneralListener(this),this);
         Bukkit.getPluginManager().registerEvents(new UIListener(this),this);
         Bukkit.getPluginManager().registerEvents(new TeamListener(this),this);
@@ -54,7 +55,9 @@ public final class AgePlugin extends JavaPlugin  {
         Bukkit.getPluginManager().registerEvents(new PresentTeamListener(this),this);
         Bukkit.getPluginManager().registerEvents(new SpecialItemListener(this),this);
         Bukkit.getPluginManager().registerEvents(new CustomEnchantmentListener(this),this);
-        //commands:
+
+
+        // simulation commands with tab completer
         getCommand("test").setExecutor(new TestCommand(this));
         getCommand("simulation").setExecutor(new SimulationCommand(this));
         getCommand("simulation").setTabCompleter(new SimulationTab(this));
@@ -69,18 +72,19 @@ public final class AgePlugin extends JavaPlugin  {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        teamsFileManager.writeTeams(teamManager.getTeams());
-        blockFileManager.writeBlocks(specialItemManager.getDecoratedItems());
-//        ConfigManager.setIsStarted(teamManager.getIsStarted());
-//        ConfigManager.setMaxNumberPerTeam(teamManager.getMaxTeamCount());
 
+        // save all players with their teams
+        teamsFileManager.writeTeams(teamManager.getTeams());
+        // save all decoration anvil locations
+        blockFileManager.writeBlocks(specialItemManager.getDecoratedItems());
+        // clear resources
         this.getTeamManager().removeAll();
-//        this.saveConfig();
 
 
 
     }
 
+    // getters for managers
     public TeamManager getTeamManager(){
         return teamManager;
     }

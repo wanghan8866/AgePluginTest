@@ -27,6 +27,7 @@ public class SimulationCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        // all commands from simulation for players and the server console
 
         if(sender instanceof Player){
             Player player=(Player) sender;

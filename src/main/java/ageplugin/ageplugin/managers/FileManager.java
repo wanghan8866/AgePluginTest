@@ -45,6 +45,7 @@ public abstract class FileManager {
     }
 
     protected void beforeWrite(){
+        // load a yml file
         try{
             if(file.exists()){
                 file.delete();

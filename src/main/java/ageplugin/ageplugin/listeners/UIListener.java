@@ -18,6 +18,7 @@ public class UIListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
+        // listen to which button is pressed and forward it to the confirmation page
         if(e.getInventory()!=null && e.getCurrentItem()!=null && e.getView().getTitle().contains("Team Selection")){
             TeamType team=TeamType.valueOf(e.getCurrentItem().getItemMeta().getLocalizedName());
 

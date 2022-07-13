@@ -32,7 +32,8 @@ public class BlockFileManager{
 
     public void writeBlocks(HashSet<Block> blocks){
         try {
-
+            // write all location of decoration anvil into a file
+            // since anvil can fail, loop through possible y value to find it and update the location
             List<Map<String,Object>> data= new ArrayList<>();
 
             for (Block block:blocks
@@ -70,6 +71,7 @@ public class BlockFileManager{
     }
 
     public HashSet<Block> readBlocks(){
+        // read the file to get location of each decoration anvil
         try {
             Gson gson=new Gson();
             Reader reader=new FileReader(file);

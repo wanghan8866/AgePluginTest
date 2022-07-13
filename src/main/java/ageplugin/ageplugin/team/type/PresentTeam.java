@@ -16,6 +16,7 @@ public class PresentTeam extends AbstractTeam {
 
     @Override
     public void onStart(Player player) {
+        // set the buffers for the present teams
         if(this.agePlugin.getTeamManager().getIsStarted()){
     //        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,Integer.MAX_VALUE,2));
             player.sendMessage(type.getDisplay()+": "+"chosen");
@@ -24,6 +25,7 @@ public class PresentTeam extends AbstractTeam {
             setChatColor();
         }
 
+        // start the hunger event
         if(this.agePlugin.getTeamManager().getIsHungered() && !getIsHungered()){
             startHunger(player);
         }

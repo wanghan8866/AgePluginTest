@@ -24,7 +24,7 @@ public class GeneralListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e){
-
+        // ban the player after the death
         agePlugin.getTeamManager().removeTeam(e.getEntity().getUniqueId());
         Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),"ban "+e.getEntity().getName());
     }
@@ -35,39 +35,28 @@ public class GeneralListener implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e){
-        Player player=e.getPlayer();
-        AbstractTeam team=this.agePlugin.getTeamManager().getTeam(player);
-        if(team!=null){
+    public void onJoin(PlayerJoinEvent e) {
+        // When player joins the server, try to find their team and try to start the abilities.
+        Player player = e.getPlayer();
+        AbstractTeam team = this.agePlugin.getTeamManager().getTeam(player);
+        if (team != null) {
 
             team.onStart(player);
 
 //            player.discoverRecipe(null);
         }
-
-//        MyConsole myConsole=new MyConsole(this.agePlugin);
-//        Bukkit.dispatchCommand(myConsole,"say not hi");
-//        Bukkit.dispatchCommand(myConsole,"team list");
-//        System.out.println(MyConsole.getLastOutput());
     }
-//    @EventHandler
-//    public void onLeave(PlayerQuitEvent e){
-//        agePlugin.getTeamManager().removeFromEvent(e.getPlayer().getUniqueId());
-//    }
+
 
     @EventHandler
     public void onServerLoad(ServerLoadEvent e){
+        // use the default team command to set up the team and change the colour.
         System.out.println("[event]   loading the server ");
         for(TeamType type:TeamType.values()){
-//            System.out.println("team add "+type.getText());
             Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),"team remove "+type.getText());
             Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),"team add "+type.getText());
-//            Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),"simulation start");
-//            Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),"say hi");
 
-//            System.out.println("team modify "+type.getText()+" color "+type.getColor());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team modify "+type.getText()+" color "+type.getColorText());
-//            System.out.println("team modify "+type.getText()+" prefix "+"{\"text\":\"["+type.getDisplay()+"] \"");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team modify "+type.getText()+" prefix "+"{\"text\":\"["+type.getText()+"] \",\"color\":\""+type.getColorText()+"\"}");
 
 

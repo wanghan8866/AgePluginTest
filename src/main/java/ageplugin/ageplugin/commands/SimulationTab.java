@@ -26,7 +26,7 @@ public class SimulationTab implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-
+        // set up tab completion for the simulation commands
         List<String> results=new ArrayList<>();
         if(sender instanceof Player){
             Player player=(Player) sender;

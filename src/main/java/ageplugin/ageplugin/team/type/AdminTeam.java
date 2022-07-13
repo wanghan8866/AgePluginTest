@@ -37,12 +37,14 @@ public class AdminTeam extends AbstractTeam {
     }
 
     public void updateSideBar(Player player){
+        // update the team number for all team
         for(TeamType teamType:TeamType.values()){
            updateSideBar(player,teamType);
         }
 
     }
     public void updateSideBar(Player player, TeamType type){
+        // update the team number for a given team
         if(player.getScoreboard().getTeam(type.getDisplay())!=null){
             player.getScoreboard().getTeam(type.getDisplay()).setSuffix(this.agePlugin.getTeamManager().getTeamCount(type)+"/"+this.agePlugin.getTeamManager().getMaxTeamCount());
         }
@@ -52,10 +54,7 @@ public class AdminTeam extends AbstractTeam {
     }
 
     private void createSideBar(Player player){
-
-//        System.out.println(player.getScoreboard().getEntries());
-
-//        Scoreboard ;
+        // create the team scoreboard
         Scoreboard scoreboard= player.getScoreboard();
         if(scoreboard==null){
             scoreboard= Bukkit.getScoreboardManager().getNewScoreboard();
@@ -90,19 +89,8 @@ public class AdminTeam extends AbstractTeam {
             i++;
         }
 
-//        System.out.println("sidebar");
-        player.setScoreboard(scoreboard);
-//        Team team=player.getScoreboard().getTeam(type.getDisplay()+" ");
-//
-//        if(team==null){
-//            team=player.getScoreboard().registerNewTeam(type.getDisplay()+" ");
-//        }
-//
-//        team.setPrefix(type.getColor()+"["+type.getText()+"] ");
-//        team.addEntry(player.getName());
-//        team.setSuffix(type.getColor()+player.getName());
-//        player.getScoreboard().getTeam(type.getDisplay()+#" ").addEntry(player.getName());
 
-//        System.out.println(player.getScoreboard().getEntries());
+        player.setScoreboard(scoreboard);
+
     }
 }

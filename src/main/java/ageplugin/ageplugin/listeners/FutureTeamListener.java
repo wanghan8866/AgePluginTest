@@ -70,6 +70,7 @@ public class FutureTeamListener implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent e){
+        // plus one fortune
         if(typeCheck(e.getPlayer().getUniqueId())){
             if(e.getBlock().getType().equals(Material.REDSTONE_ORE)||e.getBlock().getType().equals(Material.DEEPSLATE_REDSTONE_ORE)){
                 e.setDropItems(false);
@@ -93,6 +94,7 @@ public class FutureTeamListener implements Listener {
     }
 
     private ItemStack setDropItem(Player player, Material item, int a, int b, int c, int d){
+        // set the number of drops based on the looting fortune level
         int amount=a;
         if(player.getInventory().getItemInMainHand()!=null){
             if(player.getInventory().getItemInMainHand().getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS)){
@@ -110,6 +112,7 @@ public class FutureTeamListener implements Listener {
 
     @EventHandler
     public void onMobDeath(EntityDeathEvent e){
+        // plus one looting for mob drops
         if(e.getEntity().getKiller()!=null&&typeCheck(e.getEntity().getKiller().getUniqueId())){
             if(e.getEntity().getType().equals(EntityType.CREEPER)){
                 e.getDrops().add(new ItemStack(Material.GUNPOWDER,1));
@@ -133,6 +136,7 @@ public class FutureTeamListener implements Listener {
     @EventHandler
     public void onEnchanting(EnchantItemEvent e){
 
+        // return the used lapis when using enchanting table.
         Player player=e.getEnchanter();
         if(typeCheck(player.getUniqueId())){
             player.setLevel(player.getLevel()+e.whichButton());
@@ -144,6 +148,9 @@ public class FutureTeamListener implements Listener {
 
     @EventHandler
     public void onEat(PlayerItemConsumeEvent e){
+        // restrict diet to certain food
+        // disable drinking milk
+
         Player player=e.getPlayer();
         if(typeCheck(player.getUniqueId())){
             Material food=e.getItem().getType();
@@ -176,6 +183,7 @@ public class FutureTeamListener implements Listener {
 
     @EventHandler
     public void onEnchantingCrossBow(PrepareAnvilEvent e){
+        // allow more op enchants for crossbow
         if(typeCheck(e.getViewers().get(0).getUniqueId())){
             AnvilInventory anvilInventory=e.getInventory();
             anvilInventory.setRepairCost(Math.max(1,anvilInventory.getRepairCost()/2));
@@ -252,6 +260,7 @@ public class FutureTeamListener implements Listener {
     }
 
     private HashMap<Enchantment,Integer> combineEnchantments(Map<Enchantment,Integer> a1,Map<Enchantment,Integer> b1){
+        // combine Enchantments from two items
         HashMap<Enchantment,Integer> maps=new HashMap<>();
         loopEnchantments(b1, a1, maps);
         loopEnchantments(a1, b1, maps);
@@ -260,6 +269,7 @@ public class FutureTeamListener implements Listener {
     }
 
     private void loopEnchantments(Map<Enchantment, Integer> a1, Map<Enchantment, Integer> b1, Map<Enchantment, Integer> maps) {
+        // if an enchants appear on both maps, try to increment the level of it.
         for(Enchantment key:b1.keySet()){
             if(!crossBowAllowed.contains(key)){
                 continue;
@@ -284,6 +294,7 @@ public class FutureTeamListener implements Listener {
 
     @EventHandler
     public void onCrossBowShoot(EntityShootBowEvent e){
+        // disabled shooting fireworks if the quick charge is higher than 3
         if(e.getEntity() instanceof Player){
             Player player=(Player)e.getEntity();
             if(typeCheck(player.getUniqueId())){

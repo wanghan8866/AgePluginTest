@@ -14,6 +14,7 @@ public class ConfirmationUI {
     public ConfirmationUI(Player player, String what){
         Inventory gui= Bukkit.createInventory(null,54,"Confirmation for Team");
 
+        // set up appearance for the yes button
         ItemStack yes=new ItemStack(Material.EMERALD);
         ItemMeta yesMeta=yes.getItemMeta();
         yesMeta.setDisplayName("Yes");
@@ -24,7 +25,7 @@ public class ConfirmationUI {
         yes.setItemMeta(yesMeta);
         gui.setItem(20, yes);
 
-
+        // set up appearance for the Cancel button
         ItemStack cancel=new ItemStack(Material.BARRIER);
         ItemMeta cancelMeta=cancel.getItemMeta();
         cancelMeta.setDisplayName("Cancel");

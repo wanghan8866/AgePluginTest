@@ -34,6 +34,7 @@ public class CustomEnchantmentListener implements Listener {
 
     @EventHandler
     public void onInteractWithTables(PlayerInteractEvent e){
+        // disable interaction with DECORATION anvil
         Player player=e.getPlayer();
 
         Block block=e.getClickedBlock();
@@ -55,6 +56,7 @@ public class CustomEnchantmentListener implements Listener {
 
     @EventHandler
     public void onAnvilBreak(BlockBreakEvent e){
+        // disable drops from DECORATION anvil
         Block block=e.getBlock();
 
         if(block!=null&&
@@ -72,10 +74,9 @@ public class CustomEnchantmentListener implements Listener {
 
     @EventHandler
     public void onAnvilDrop(EntityDropItemEvent e){
+        // disable drops from DECORATION anvil
         ItemStack block=e.getItemDrop().getItemStack();
 
-//        System.out.println(block);
-//        System.out.println(e.getItems());
         if(block!=null&&
                 (block.getType().equals(Material.ANVIL)||
                         block.getType().equals(Material.CHIPPED_ANVIL)||
@@ -87,6 +88,7 @@ public class CustomEnchantmentListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
+        // allow magnetic sword to take all items from a player into their killer's inventory.
         Player killer=e.getEntity().getKiller();
         Player player =e.getEntity();
         if(killer!=null &&  player!=null){
@@ -105,9 +107,8 @@ public class CustomEnchantmentListener implements Listener {
     }
 
     private void handlerDrops(Player player, List<ItemStack> drops, LivingEntity entity) {
+        // try to put new items into player's inventory. If full/fail, will drop near the player.
         if(!drops.isEmpty()){
-
-
 //                killer.sendMessage("get items testing");
             for (int i = 0; i <drops.size() ; i++) {
 
@@ -128,6 +129,7 @@ public class CustomEnchantmentListener implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent e){
+        // allow magnetic sword to take all drops from a mob into their killer's inventory.
         if(e.getEntity().getKiller() instanceof Player){
             Player player=e.getEntity().getKiller();
             if(player!=null){

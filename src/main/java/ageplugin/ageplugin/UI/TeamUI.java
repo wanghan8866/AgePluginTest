@@ -21,6 +21,7 @@ public class TeamUI {
         Inventory gui= Bukkit.createInventory(null,54, ChatColor.BLUE+"Team Selection");
 
         int i=0;
+        // set up button for each team excluding admin tean
         for(TeamType teamType: TeamType.values()){
             if(teamType.getHidden()){
                 continue;

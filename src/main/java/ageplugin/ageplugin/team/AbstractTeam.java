@@ -38,6 +38,7 @@ public abstract class AbstractTeam implements Listener {
     public abstract void onStart(Player player);
 
     public void remove(){
+        // reset the player's name
         Player player=Bukkit.getPlayer(uuid);
         if(player!=null){
             player.setDisplayName(player.getName());
@@ -47,6 +48,7 @@ public abstract class AbstractTeam implements Listener {
 
     }
     protected void setChatColor(){
+        // set the colour for name in the chat
         Player player=Bukkit.getPlayer(uuid);
         if(player!=null){
             player.setDisplayName(type.getColor()+"["+type.getText()+"] "+player.getName()+ChatColor.RESET);

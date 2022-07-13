@@ -117,7 +117,7 @@ public class PastTeamListener implements Listener {
 
     public PastTeamListener(AgePlugin agePlugin){
 
-
+        // create recipes for chain-mails
         this.agePlugin=agePlugin;
 
         NamespacedKey key1=new NamespacedKey(this.agePlugin,"custom_chained_boots_1");
@@ -199,6 +199,7 @@ public class PastTeamListener implements Listener {
 
     @EventHandler
     public void onInteractWithTables(PlayerInteractEvent e){
+        // only allow interaction with certain inventory,
         Player player=e.getPlayer();
         if(typeCheck(player.getUniqueId())){
             if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock()!=null&& disallowedTables.contains(e.getClickedBlock().getType())
@@ -212,25 +213,11 @@ public class PastTeamListener implements Listener {
     }
 
 
-//    @EventHandler
-//    public void onBlocking(EntityDamageByEntityEvent e){
-//
-//        if(e.getEntity() instanceof Player){
-//            Player player=(Player) e.getEntity();
-//            if(typeCheck(player.getUniqueId())){
-//                if(player.isBlocking()){
-//                    player.damage(e.getDamage());
-//                    e.setCancelled(true);
-//                }
-//            }
-//
-//        }
-//
-//
-//    }
+
 
     @EventHandler
     public void onCrossBowShoot(EntityShootBowEvent e){
+        // can not use crossbow
         if(e.getEntity() instanceof Player){
             Player player=(Player)e.getEntity();
             if(typeCheck(player.getUniqueId())){
@@ -253,6 +240,7 @@ public class PastTeamListener implements Listener {
 
     @EventHandler
     public void onDrink(PlayerItemConsumeEvent e){
+        // disable milk
         Player player = e.getPlayer();
         if (typeCheck(player.getUniqueId())) {
             Material food = e.getItem().getType();
@@ -269,6 +257,7 @@ public class PastTeamListener implements Listener {
 
     @EventHandler
     public void onOpen(PlayerInteractEntityEvent e){
+        // disable interaction with VILLAGER and WANDERING_TRADER
         if(typeCheck(e.getPlayer().getUniqueId())){
             if(e.getRightClicked().getType().equals(EntityType.VILLAGER)||e.getRightClicked().getType().equals(EntityType.WANDERING_TRADER)){
                 e.setCancelled(true);
@@ -282,6 +271,8 @@ public class PastTeamListener implements Listener {
     @EventHandler
     public void onCraft(PrepareItemCraftEvent e){
 
+        // crating restriction
+        // unlock iron armours with levels.
         Player player= (Player) e.getViewers().get(0);
         if(typeCheck(player.getUniqueId())){
             Recipe result = e.getRecipe();
@@ -325,6 +316,7 @@ public class PastTeamListener implements Listener {
 
     @EventHandler
     public void OnCraftArmors(CraftItemEvent e){
+        //cost iron armours wih levels
 //        System.out.println("CraftItemEvent: " +e.getResult());
         Player player= (Player) e.getViewers().get(0);
         if(typeCheck(player.getUniqueId())){

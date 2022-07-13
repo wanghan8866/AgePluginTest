@@ -40,6 +40,7 @@ public class TeamManager {
     }
 
     public void setTeam(UUID id, TeamType type){
+        // if player is online,
         removeTeam(id);
         System.out.println("setting");
         Player player=Bukkit.getPlayer(id);
@@ -66,7 +67,7 @@ public class TeamManager {
     }
 
     public void setTeam(OfflinePlayer player, UUID id,TeamType type){
-
+        // if player is offline,
         System.out.println(player==null);
         System.out.println(player);
         if(player!=null){
@@ -86,6 +87,7 @@ public class TeamManager {
     }
 
     private void typeSelection(TeamType type, UUID id) {
+        // create a team class based on the team types
         if(type==TeamType.FUTURE){
             teams.put(id,new FutureTeam(agePlugin,id));
         }else if(type==TeamType.PRESENT){
@@ -104,6 +106,7 @@ public class TeamManager {
 
 
     public void removeTeam(UUID id){
+        // remove one player from a team
         if(teams.containsKey(id)){
             removePlayer(id,true);
             TeamType teamType=teams.get(id).getType();
@@ -155,6 +158,7 @@ public class TeamManager {
 
     public void removeAll() {
 
+        // remove all players from the teams
         for (UUID id:teams.keySet()){
             removePlayer(id,true);
         }
@@ -164,6 +168,7 @@ public class TeamManager {
     }
 
     public void updateAllAdmin(){
+        // update the all team players to admin team scoreboard.
         for(UUID id: teams.keySet()){
             AbstractTeam team=teams.get(id);
             if(team.getType().equals(TeamType.ADMIN)){
@@ -176,6 +181,7 @@ public class TeamManager {
         }
     }
     public void updateAllAdmin(TeamType type){
+        // update the given team players to admin team scoreboard.
         for(UUID id: teams.keySet()){
             AbstractTeam team=teams.get(id);
             if(team.getType().equals(TeamType.ADMIN)){
@@ -189,6 +195,7 @@ public class TeamManager {
     }
 
     public void teleportTeam(TeamType type, Location location){
+        // teleport all team member to a given location
         for(UUID id:teams.keySet()){
             AbstractTeam team=teams.get(id);
             if(team.getType().equals(type)){
@@ -202,6 +209,7 @@ public class TeamManager {
     }
 
     private void removePlayer(UUID id, boolean fromTeam) {
+        // remove the player from the current team and reset everything
         Player player= Bukkit.getPlayer(id);
         if(player!=null){
             for (PotionEffect effect:player.getActivePotionEffects()
@@ -252,6 +260,7 @@ public class TeamManager {
     }
 
     public void giveHungerToAll(){
+        // start the hunger event for all player apart from admin
         setHungered(true);
         for(UUID id:teams.keySet()){
             AbstractTeam team=teams.get(id);
@@ -266,7 +275,9 @@ public class TeamManager {
     }
 
     public void removeHungerToAll(){
+        // end the hunger event for all player apart from admin
         setHungered(false);
+
         for(UUID id:teams.keySet()){
             AbstractTeam team=teams.get(id);
             if(!team.getType().equals(TeamType.ADMIN)){

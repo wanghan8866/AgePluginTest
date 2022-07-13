@@ -20,8 +20,8 @@ public class TeamFileManager extends FileManager{
     }
 
     public void writeTeams(HashMap<UUID, AbstractTeam> teams){
+        // write player and player's team into a yml file
        beforeWrite();
-
         for(UUID uuid:teams.keySet()){
             System.out.println(uuid+": "+teams.get(uuid).getType().name());
 
@@ -32,6 +32,7 @@ public class TeamFileManager extends FileManager{
     }
 
     public void readTeams(HashMap<UUID, AbstractTeam> teams){
+        // read from yml to set the team and players
         if(yamlConfiguration.getConfigurationSection("teams.")!=null){
             for(String uuid:yamlConfiguration.getConfigurationSection("teams.").getKeys(false)){
                 System.out.println(UUID.fromString(uuid));

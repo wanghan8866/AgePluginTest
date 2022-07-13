@@ -23,6 +23,7 @@ public class SpecialItemManager {
     private final HashSet<Block> decoratedItems=new HashSet<>();
 
     public SpecialItemManager(AgePlugin agePlugin){
+        // create each special item and register them
         this.agePlugin=agePlugin;
 
 
@@ -131,6 +132,7 @@ public class SpecialItemManager {
 
     public boolean spawnItemToPlayer(Player player,String itemName){
 
+        // try to give the special item to the player
         if(specialItemsMap.containsKey(itemName)){
 
             player.getInventory().addItem(specialItemsMap.get(itemName));
@@ -156,6 +158,7 @@ public class SpecialItemManager {
         return decoratedItems;
     }
     public void updateAnvil(){
+        // update the new location of anvil since it will fall and loops through all possible y value.
         HashSet<Block> blocks=new HashSet<>();
         for (Block block:decoratedItems
         ) {

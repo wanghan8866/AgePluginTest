@@ -20,6 +20,7 @@ public class CSVTeamManager {
     }
 
     public void readTeams(){
+        // try to read a table to set player's team
         String line="";
         String splitBy=",";
         try{

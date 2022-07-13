@@ -33,6 +33,7 @@ public class SpecialItemListener implements Listener {
 
     @EventHandler
     public void onPlayerDrop(PlayerDropItemEvent e){
+        // can not drop the binding sword
         ItemStack item=e.getItemDrop().getItemStack();
         if(item!=null &&( item.getType().equals(Material.DIAMOND_SWORD) && item.containsEnchantment(Enchantment.BINDING_CURSE) )||
                 (item.getType().equals(Material.TURTLE_HELMET) && item.containsEnchantment(Enchantment.BINDING_CURSE))){
@@ -43,7 +44,7 @@ public class SpecialItemListener implements Listener {
 
     @EventHandler
     public void onPlayerThrowEnderPearl(PlayerInteractEvent e){
-
+        // respawn a new pearl after being used.
         Player player=e.getPlayer();
         if(e.getHand().equals(EquipmentSlot.HAND)){
             if(e.getAction().equals(Action.RIGHT_CLICK_AIR)|e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
@@ -62,33 +63,7 @@ public class SpecialItemListener implements Listener {
 
     }
 
-//    @EventHandler
-//    public void OnWearHelmet(InventoryClickEvent e){
-//        Player player= (Player) e.getWhoClicked();
-//        if(player!=null){
-//           if(e.getSlotType().equals(InventoryType.SlotType.ARMOR)){
-//               ItemStack itemStack=player.getItemOnCursor();
-//
-//               System.out.println(e.getCurrentItem());
-//               System.out.println(itemStack);
-//               List<ItemStack> armors= Arrays.stream(player.getInventory().getArmorContents()).collect(Collectors.toList());
-//               System.out.println(armors);
-////               System.out.println(e.);
-//           }
-//
-////           if(e.isShiftClick()){
-////               if(e.getCurrentItem()!=null&&
-////                       e.getCurrentItem().getType().equals(Material.TURTLE_HELMET)&&
-////                        e.getCurrentItem().getItemMeta().getDisplayName().equals("The Crown")
-////               ){
-////
-////
-////                   System.out.println(armors.contains(e.getCurrentItem()));
-////
-////               }
-////           }
-//        }
-//    }
+
 
 
 }

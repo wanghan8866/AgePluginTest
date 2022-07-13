@@ -24,18 +24,17 @@ public class AdminTeamListener implements Listener {
 
     @EventHandler
     public void onAnvilPlace(BlockPlaceEvent e){
+
+        // only allow placing DECORATION anvil by admin players
         Player player=e.getPlayer();
 
         Block anvil=e.getBlockPlaced();
         ItemStack itemStack=e.getItemInHand();
         if(anvil.getType().equals(Material.ANVIL) && itemStack.getType().equals(Material.ANVIL)){
-//                    System.out.println(anvil);
-//                    System.out.println(itemStack.getEnchantments());
+
             if(itemStack.getEnchantments().containsKey(CustomEnchants.DECORATION)){
-
-
                 if(typeCheck(player.getUniqueId())&&player.getGameMode().equals(GameMode.CREATIVE)){
-//                    System.out.println(itemStack);
+
                     this.agePlugin.getSpecialItemManager().getDecoratedItems().add(anvil);
 
 

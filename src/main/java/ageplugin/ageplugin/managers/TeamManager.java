@@ -16,6 +16,7 @@ import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -26,12 +27,14 @@ public class TeamManager {
     private final AgePlugin agePlugin;
     private int MAX_TEAM_COUNT;
     private boolean isStarted;
+    private boolean isHungered;
 
     public TeamManager(AgePlugin agePlugin){
 
         this.agePlugin=agePlugin;
         isStarted=ConfigManager.getIsStarted();
         MAX_TEAM_COUNT=ConfigManager.getMaxNumberPerTeam();
+        isHungered=false;
 
 
     }
@@ -52,6 +55,8 @@ public class TeamManager {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team join "+type.getText()+" "+player.getName());
 //            player.performCommand("team join "+type.getText());
             updateAllAdmin(type);
+            player.discoverRecipes(this.agePlugin.getRecipeKeysMap().get(type));
+//            System.out.println("setting the recipes "+this.agePlugin.getRecipeKeysMap().get(type));
         }
         else{
             OfflinePlayer offlinePlayer=Bukkit.getOfflinePlayer(id);
@@ -71,9 +76,9 @@ public class TeamManager {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team leave "+player.getName());
             typeSelection(type, id);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"team join "+type.getText()+" "+player.getName());
-            System.out.println("update for amdin befire");
+//            System.out.println("update for admin before");
             updateAllAdmin(type);
-            System.out.println("update for amdin after");
+//            System.out.println("update for admin after");
         }else{
             System.out.println("not existing");
         }
@@ -209,7 +214,8 @@ public class TeamManager {
 
             if(teams.get(id).getType().equals(TeamType.ADMIN)){
                 //player.getScoreboard().getTeam(teams.get(id).getType().getDisplay()+" ").removeEntry(teams.get(id).getType().getColor()+player.getName());
-                player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+//                player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+                player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 
             }
             if(fromTeam){
@@ -238,6 +244,41 @@ public class TeamManager {
         }
         return false;
     }
+    public boolean getIsHungered(){
+        return isHungered;
+    }
+    public void setHungered(boolean h){
+        isHungered=h;
+    }
+
+    public void giveHungerToAll(){
+        setHungered(true);
+        for(UUID id:teams.keySet()){
+            AbstractTeam team=teams.get(id);
+            if(!team.getType().equals(TeamType.ADMIN)){
+                Player player=Bukkit.getPlayer(id);
+                if(player!=null){
+                    team.startHunger(player);
+
+                }
+            }
+        }
+    }
+
+    public void removeHungerToAll(){
+        setHungered(false);
+        for(UUID id:teams.keySet()){
+            AbstractTeam team=teams.get(id);
+            if(!team.getType().equals(TeamType.ADMIN)){
+                Player player=Bukkit.getPlayer(id);
+                if(player!=null){
+                    team.endHunger(player);
+
+                }
+            }
+        }
+    }
+
 
 
 

@@ -102,6 +102,38 @@ public class SimulationCommand implements CommandExecutor {
 
 
             }
+            else if(args.length==3 &&  args[0].equalsIgnoreCase("team") &&
+
+                    args[1].equalsIgnoreCase("hunger") &&
+                    args[2].equalsIgnoreCase("start")
+            ){
+                if(player.isOp()){
+                    try{
+                        this.agePlugin.getTeamManager().giveHungerToAll();
+                    }
+                    catch (NumberFormatException e){
+                        player.sendMessage(ChatColor.RED+"Wrong format for time");
+                    }
+                }else{
+                    no_permission(player);
+                }
+
+
+            }
+            else if(args.length==3 &&  args[0].equalsIgnoreCase("team") &&
+
+                    args[1].equalsIgnoreCase("hunger") &&
+                    args[2].equalsIgnoreCase("end")
+            ){
+                if(player.isOp()){
+
+                    this.agePlugin.getTeamManager().removeHungerToAll();
+                }else{
+                    no_permission(player);
+                }
+
+
+            }
             else if(args.length==6  && args[0].equalsIgnoreCase("team") &&args[1].equalsIgnoreCase("teleport") &&
                     Stream.of(TeamType.values()).map(e->e.getText().toLowerCase()).collect(Collectors.toList()).contains(args[2].toLowerCase())){
                 if(player.isOp()){
@@ -140,12 +172,31 @@ public class SimulationCommand implements CommandExecutor {
                 }
 
 
+            }else if(args.length==4 &&  args[0].equalsIgnoreCase("team") && args[1].equalsIgnoreCase("give")){
+                if(player.isOp()){
+
+                    String playerName=args[2];
+                    String itemName=args[3];
+                    player=Bukkit.getPlayer(playerName);
+                    if(player!=null){
+
+                        if(!this.agePlugin.getSpecialItemManager().spawnItemToPlayer(player,itemName)){
+                            player.sendMessage(ChatColor.RED+"Item does not exist!");
+                        }
+                    }else{
+                        System.out.println(ChatColor.RED+"No such player online!");
+                    }
+
+                }else{
+                    no_permission(player);
+                }
             }
             else{
                 player.sendMessage(ChatColor.RED+"Wrong command for \\simulation");
                 player.sendMessage(ChatColor.RED+"Please try: ");
                 player.sendMessage(ChatColor.RED+"  join <Team> <Name | Optional>");
                 player.sendMessage(ChatColor.RED+"  remove <Name | Optional>");
+                player.sendMessage(ChatColor.RED+"  give <player> <item>");
             }
 
         }else if(sender instanceof ConsoleCommandSender){
@@ -167,6 +218,7 @@ public class SimulationCommand implements CommandExecutor {
                 }
 
 
+
             }else if(args.length==1 && args[0].equalsIgnoreCase("list")){
                 for(UUID id: agePlugin.getTeamManager().getTeams().keySet()){
                     System.out.println(id+": "+agePlugin.getTeamManager().getTeams().get(id));
@@ -179,6 +231,8 @@ public class SimulationCommand implements CommandExecutor {
             else if(args.length==1 && args[0].equalsIgnoreCase("clear")){
                 agePlugin.getTeamManager().removeAll();
                 agePlugin.getTeamManager().getTeams().clear();
+            }else if(args.length==1 && args[0].equalsIgnoreCase("set")){
+                agePlugin.getCsvTeamManager().readTeams();
             }
             else{
                 System.out.println("no such command!");

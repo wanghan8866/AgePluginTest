@@ -40,12 +40,35 @@ public class SimulationTab implements TabCompleter {
 
                     results.add("remove");
                     results.add("teleport");
+                    results.add("give");
+                    results.add("hunger");
                 }
             }else if(args.length==3 && args[0].equals("team") && args[1].equals("remove")){
                 if(player.isOp()){
                     for(Player p:Bukkit.getOnlinePlayers()){
                         results.add(p.getName());
                     }
+                }
+
+            }
+            else if(args.length==3 && args[0].equals("team") && args[1].equals("hunger")){
+                if(player.isOp()){
+                    results.add("start");
+                    results.add("end");
+                }
+
+            }
+            else if(args.length==3 && args[0].equals("team") && args[1].equals("give")){
+                if(player.isOp()){
+                    for(Player p:Bukkit.getOnlinePlayers()){
+                        results.add(p.getName());
+                    }
+                }
+
+            }
+            else if(args.length==4 && args[0].equals("team") && args[1].equals("give")){
+                if(player.isOp()){
+                    results.addAll(this.agePlugin.getSpecialItemManager().getSpecialItems().keySet());
                 }
 
             }

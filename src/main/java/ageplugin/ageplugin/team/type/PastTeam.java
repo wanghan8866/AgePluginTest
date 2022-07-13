@@ -122,6 +122,11 @@ public class PastTeam extends AbstractTeam {
 
 
             startingTitle();
+            setChatColor();
+        }
+
+        if(this.agePlugin.getTeamManager().getIsHungered() && !getIsHungered()){
+            startHunger(player);
         }
 
     }

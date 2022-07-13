@@ -24,7 +24,9 @@ public class GeneralListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e){
+
         agePlugin.getTeamManager().removeTeam(e.getEntity().getUniqueId());
+        Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),"ban "+e.getEntity().getName());
     }
 
     @EventHandler
@@ -39,7 +41,10 @@ public class GeneralListener implements Listener {
         if(team!=null){
 
             team.onStart(player);
+
+//            player.discoverRecipe(null);
         }
+
 //        MyConsole myConsole=new MyConsole(this.agePlugin);
 //        Bukkit.dispatchCommand(myConsole,"say not hi");
 //        Bukkit.dispatchCommand(myConsole,"team list");
@@ -75,4 +80,7 @@ public class GeneralListener implements Listener {
             this.agePlugin.getTeamManager().setTeam(uuid,this.agePlugin.getTeamsFileManager().getPlayers().get(uuid));
         }
     }
+
+
+
 }

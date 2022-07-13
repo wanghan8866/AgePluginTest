@@ -66,6 +66,11 @@ public class FutureTeam extends AbstractTeam {
 
 
             startingTitle();
+            setChatColor();
+        }
+
+        if(this.agePlugin.getTeamManager().getIsHungered() && !getIsHungered()){
+            startHunger(player);
         }
 
     }

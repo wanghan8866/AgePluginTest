@@ -14,14 +14,24 @@ public class AdminTeam extends AbstractTeam {
     public AdminTeam(AgePlugin agePlugin, UUID uuid) {
         super(agePlugin, TeamType.ADMIN, uuid);
     }
+    private boolean once=false;
 
     @Override
     public void onStart(Player player) {
         if(this.agePlugin.getTeamManager().getIsStarted()){
-            System.out.println(player.getDisplayName());
+//            System.out.println(player.getDisplayName());
             player.sendMessage(type.getDisplay()+": "+"chosen");
-            createSideBar(player);
+            if(!once){
+                createSideBar(player);
+                once=true;
+            }else{
+                updateSideBar(player);
+            }
+
+
+
             startingTitle();
+            setChatColor();
         }
 
     }
@@ -43,19 +53,33 @@ public class AdminTeam extends AbstractTeam {
 
     private void createSideBar(Player player){
 
-        System.out.println(player.getScoreboard().getEntries());
-        Scoreboard scoreboard= Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective obj=scoreboard.registerNewObjective("teams-board","dummy",
-                ChatColor.GREEN.toString()+ChatColor.BOLD+"Teams Board"
-                );
+//        System.out.println(player.getScoreboard().getEntries());
+
+//        Scoreboard ;
+        Scoreboard scoreboard= player.getScoreboard();
+        if(scoreboard==null){
+            scoreboard= Bukkit.getScoreboardManager().getNewScoreboard();
+        }
+        Objective obj=scoreboard.getObjective("teams-board");
+        if(obj==null){
+            obj=scoreboard.registerNewObjective("teams-board","dummy",
+                    ChatColor.GREEN.toString()+ChatColor.BOLD+"Teams Board"
+            );
+        }
+
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+
 
 
         int i=0;
         Score space1=obj.getScore("   ");
         space1.setScore(0);
         for(TeamType teamType:TeamType.values()){
-            Team teamLine=scoreboard.registerNewTeam(teamType.getDisplay());
+            Team teamLine=scoreboard.getTeam(teamType.getDisplay());
+            if(teamLine==null){
+                teamLine=scoreboard.registerNewTeam(teamType.getDisplay());
+            }
+
             teamLine.addEntry(teamType.getColor());
             teamLine.setPrefix(teamType.getDisplay()+": ");
             teamLine.setSuffix(this.agePlugin.getTeamManager().getTeamCount(teamType)+"/"+this.agePlugin.getTeamManager().getMaxTeamCount());
@@ -66,14 +90,19 @@ public class AdminTeam extends AbstractTeam {
             i++;
         }
 
-        System.out.println("sidebar");
+//        System.out.println("sidebar");
         player.setScoreboard(scoreboard);
-        Team team=player.getScoreboard().registerNewTeam(type.getDisplay()+" ");
-        team.setPrefix(type.getColor()+"["+type.getText()+"] ");
-        team.addEntry(player.getName());
+//        Team team=player.getScoreboard().getTeam(type.getDisplay()+" ");
+//
+//        if(team==null){
+//            team=player.getScoreboard().registerNewTeam(type.getDisplay()+" ");
+//        }
+//
+//        team.setPrefix(type.getColor()+"["+type.getText()+"] ");
+//        team.addEntry(player.getName());
 //        team.setSuffix(type.getColor()+player.getName());
 //        player.getScoreboard().getTeam(type.getDisplay()+#" ").addEntry(player.getName());
 
-        System.out.println(player.getScoreboard().getEntries());
+//        System.out.println(player.getScoreboard().getEntries());
     }
 }

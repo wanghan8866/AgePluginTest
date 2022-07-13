@@ -16,17 +16,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class FileManager {
+public abstract class FileManager {
 
-    private AgePlugin agePlugin;
-    private File file;
-    private YamlConfiguration yamlConfiguration;
-    private HashMap<UUID, TeamType> players;
+    protected AgePlugin agePlugin;
+    protected File file;
+    protected YamlConfiguration yamlConfiguration;
+
 
 
     public FileManager(AgePlugin agePlugin,String fileName ) {
         this.agePlugin=agePlugin;
-        players=new HashMap<>();
+
         this.file=new File(this.agePlugin.getDataFolder(),fileName);
         try {
             if(!file.exists()){
@@ -40,32 +40,27 @@ public class FileManager {
         }
 
         this.yamlConfiguration=YamlConfiguration.loadConfiguration(file);
-        readTeams(this.agePlugin.getTeamManager().getTeams());
+
 
     }
 
-
-    public void writeTeams(HashMap<UUID, AbstractTeam> teams){
+    protected void beforeWrite(){
         try{
             if(file.exists()){
                 file.delete();
 
             }
             file.createNewFile();
-            this.yamlConfiguration=YamlConfiguration.loadConfiguration(file);
+            this.yamlConfiguration= YamlConfiguration.loadConfiguration(file);
 
         }catch (IOException e){
             e.printStackTrace();
         }
 
         System.out.println("writing the file");
+    }
 
-        for(UUID uuid:teams.keySet()){
-            System.out.println(uuid+": "+teams.get(uuid).getType().name());
-
-            yamlConfiguration.set("teams."+uuid,teams.get(uuid).getType().name());
-
-        }
+    protected void save(){
         try {
             yamlConfiguration.save(file);
         }
@@ -74,30 +69,10 @@ public class FileManager {
         }
     }
 
-    public void readTeams(HashMap<UUID, AbstractTeam> teams){
-        if(yamlConfiguration.getConfigurationSection("teams.")!=null){
-            for(String uuid:yamlConfiguration.getConfigurationSection("teams.").getKeys(false)){
-                System.out.println(UUID.fromString(uuid));
-                String type=yamlConfiguration.getString("teams."+uuid);
-                try{
-                    System.out.println(yamlConfiguration.get("teams."+uuid));
-
-                   players.put(UUID.fromString(uuid),TeamType.valueOf(type));
 
 
-                }catch (IllegalArgumentException e){
-                    e.printStackTrace();
-                }
 
 
-            }
-        }
-
-    }
-
-    public HashMap<UUID, TeamType> getPlayers(){
-        return players;
-    }
 
 
 }

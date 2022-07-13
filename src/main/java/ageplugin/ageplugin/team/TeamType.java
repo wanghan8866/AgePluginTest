@@ -6,7 +6,7 @@ import org.bukkit.Material;
 public enum TeamType {
     PAST(ChatColor.GREEN.toString(),"green","Past", Material.STONE,
             "The Past being naturally stronger but less technologically advanced, stone age", false),
-    PRESENT(ChatColor.GRAY.toString(),"gray","Present",Material.IRON_INGOT,
+    PRESENT(ChatColor.BLUE.toString(),"blue","Present",Material.IRON_INGOT,
             "The Present being like modern day civilization, normal minecraft",false),
     FUTURE(ChatColor.RED.toString(),"red","Future",Material.REDSTONE,
             "The future being physically weaker but with more technology",false),
@@ -45,5 +45,13 @@ public enum TeamType {
     public String getColor(){return color;}
     public String getColorText(){return colorText;}
     public boolean getHidden(){return hidden;}
+    public static TeamType getTeam(String teamName){
+        for(TeamType team:TeamType.values()){
+            if(teamName.equalsIgnoreCase(team.name())){
+                return team;
+            }
+        }
+        return null;
+    }
 
 }

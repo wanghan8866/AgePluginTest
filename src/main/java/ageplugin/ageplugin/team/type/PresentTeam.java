@@ -21,6 +21,11 @@ public class PresentTeam extends AbstractTeam {
             player.sendMessage(type.getDisplay()+": "+"chosen");
 
             startingTitle();
+            setChatColor();
+        }
+
+        if(this.agePlugin.getTeamManager().getIsHungered() && !getIsHungered()){
+            startHunger(player);
         }
 
     }

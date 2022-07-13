@@ -2,7 +2,10 @@ package ageplugin.ageplugin.listeners;
 
 import ageplugin.ageplugin.AgePlugin;
 import ageplugin.ageplugin.team.TeamType;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -17,6 +21,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.HashSet;
 import java.util.UUID;
@@ -82,11 +87,19 @@ public class PastTeamListener implements Listener {
                     Material.WHITE_DYE, Material.WHITE_BED, Material.WHITE_WOOL, Material.WHITE_CARPET,
                     Material.YELLOW_DYE, Material.YELLOW_BED, Material.YELLOW_WOOL, Material.YELLOW_CARPET,
                     Material.CAMPFIRE, Material.COMPOSTER, Material.BARREL, Material.BOWL, Material.MUSHROOM_STEW, Material.BEETROOT_SOUP,
-                    Material.CRAFTING_TABLE, Material.BONE_MEAL, Material.BONE
+                    Material.CRAFTING_TABLE, Material.BONE_MEAL, Material.BONE,
+                    Material.IRON_INGOT, Material.SHIELD, Material.BUCKET, Material.FLINT_AND_STEEL,
+                    Material.SHEARS, Material.IRON_BARS, Material.IRON_BLOCK,
+                    Material.IRON_AXE,Material.IRON_HOE,Material.IRON_PICKAXE,
+                    Material.IRON_SHOVEL,Material.IRON_SWORD,
+                    Material.IRON_BOOTS,Material.IRON_LEGGINGS, Material.IRON_HORSE_ARMOR,
+                    Material.IRON_CHESTPLATE, Material.IRON_HELMET, Material.FURNACE,
+                    Material.CHAINMAIL_BOOTS,Material.CHAINMAIL_LEGGINGS,
+                    Material.CHAINMAIL_CHESTPLATE, Material.CHAINMAIL_HELMET, Material.IRON_NUGGET, Material.CHAIN
 
-            ).collect(Collectors.toCollection(HashSet::new));
+                    ).collect(Collectors.toCollection(HashSet::new));
     private static final HashSet<Material> disallowedTables=Stream.of(
-            Material.FURNACE,Material.FURNACE_MINECART, Material.BLAST_FURNACE, Material.SMOKER,
+            Material.FURNACE_MINECART, Material.BLAST_FURNACE, Material.SMOKER,
             Material.BREWING_STAND,Material.SMITHING_TABLE, Material.STONECUTTER, Material.GRINDSTONE,
             Material.ENCHANTING_TABLE,Material.FLETCHING_TABLE, Material.CARTOGRAPHY_TABLE, Material.LOOM,
             Material.DROPPER, Material.DISPENSER, Material.LECTERN, Material.ANVIL, Material.BEACON
@@ -103,7 +116,84 @@ public class PastTeamListener implements Listener {
 
 
     public PastTeamListener(AgePlugin agePlugin){
+
+
         this.agePlugin=agePlugin;
+
+        NamespacedKey key1=new NamespacedKey(this.agePlugin,"custom_chained_boots_1");
+        ShapedRecipe chain_boots=new ShapedRecipe(key1,new ItemStack(Material.CHAINMAIL_BOOTS));
+        chain_boots.shape(
+                "N N",
+                "I I",
+                "   ");
+        chain_boots.setIngredient('N', Material.IRON_NUGGET);
+        chain_boots.setIngredient('I', Material.IRON_INGOT);
+        Bukkit.addRecipe(chain_boots);
+
+        ShapedRecipe chain_boots_1=new ShapedRecipe(new NamespacedKey(this.agePlugin,"custom_chained_boots_2"),new ItemStack(Material.CHAINMAIL_BOOTS));
+        chain_boots_1.shape(
+                "   ",
+                "N N",
+                "I I"
+               );
+        chain_boots_1.setIngredient('N', Material.IRON_NUGGET);
+        chain_boots_1.setIngredient('I', Material.IRON_INGOT);
+        Bukkit.addRecipe(chain_boots_1);
+
+
+        ShapedRecipe chain_helmet_1=new ShapedRecipe(new NamespacedKey(this.agePlugin,"custom_chained_helmet_1"),new ItemStack(Material.CHAINMAIL_HELMET));
+        chain_helmet_1.shape(
+                "   ",
+                "NIN",
+                "I I"
+        );
+        chain_helmet_1.setIngredient('N', Material.IRON_NUGGET);
+        chain_helmet_1.setIngredient('I', Material.IRON_INGOT);
+        Bukkit.addRecipe(chain_helmet_1);
+
+
+        NamespacedKey key2=new NamespacedKey(this.agePlugin,"custom_chained_helmet_2");
+        ShapedRecipe chain_helmet_2=new ShapedRecipe(key2,new ItemStack(Material.CHAINMAIL_HELMET));
+        chain_helmet_2.shape(
+                "NIN",
+                "I I",
+                "   "
+        );
+        chain_helmet_2.setIngredient('N', Material.IRON_NUGGET);
+        chain_helmet_2.setIngredient('I', Material.IRON_INGOT);
+        Bukkit.addRecipe(chain_helmet_2);
+
+
+        NamespacedKey key3 = new NamespacedKey(this.agePlugin,"custom_chained_chestplate_1");
+        ShapedRecipe chain_chestplate_1=new ShapedRecipe(key3,new ItemStack(Material.CHAINMAIL_CHESTPLATE));
+        chain_chestplate_1.shape(
+                "N N",
+                "III",
+                "NIN"
+        );
+        chain_chestplate_1.setIngredient('N', Material.IRON_NUGGET);
+        chain_chestplate_1.setIngredient('I', Material.IRON_INGOT);
+        Bukkit.addRecipe(chain_chestplate_1);
+
+
+        NamespacedKey key4 = new NamespacedKey(this.agePlugin,"custom_chained_leggings_1");
+        ShapedRecipe chain_leggings_1=new ShapedRecipe(key4,new ItemStack(Material.CHAINMAIL_LEGGINGS));
+        chain_leggings_1.shape(
+                "NIN",
+                "I I",
+                "N N"
+        );
+        chain_leggings_1.setIngredient('N', Material.IRON_NUGGET);
+        chain_leggings_1.setIngredient('I', Material.IRON_INGOT);
+        Bukkit.addRecipe(chain_leggings_1);
+
+
+
+        this.agePlugin.getRecipeKeysMap().get(TeamType.PAST).add(key1);
+        this.agePlugin.getRecipeKeysMap().get(TeamType.PAST).add(key2);
+        this.agePlugin.getRecipeKeysMap().get(TeamType.PAST).add(key3);
+        this.agePlugin.getRecipeKeysMap().get(TeamType.PAST).add(key4);
+
     }
 
 
@@ -122,22 +212,23 @@ public class PastTeamListener implements Listener {
     }
 
 
-    @EventHandler
-    public void onBlocking(EntityDamageByEntityEvent e){
+//    @EventHandler
+//    public void onBlocking(EntityDamageByEntityEvent e){
+//
+//        if(e.getEntity() instanceof Player){
+//            Player player=(Player) e.getEntity();
+//            if(typeCheck(player.getUniqueId())){
+//                if(player.isBlocking()){
+//                    player.damage(e.getDamage());
+//                    e.setCancelled(true);
+//                }
+//            }
+//
+//        }
+//
+//
+//    }
 
-        if(e.getEntity() instanceof Player){
-            Player player=(Player) e.getEntity();
-            if(typeCheck(player.getUniqueId())){
-                if(player.isBlocking()){
-                    player.damage(e.getDamage());
-                    e.setCancelled(true);
-                }
-            }
-
-        }
-
-
-    }
     @EventHandler
     public void onCrossBowShoot(EntityShootBowEvent e){
         if(e.getEntity() instanceof Player){
@@ -197,11 +288,75 @@ public class PastTeamListener implements Listener {
             if(result!=null){
                 if(!allowedCraftingResults.contains(result.getResult().getType())){
                     e.getInventory().setResult(new ItemStack(Material.AIR));
+                }else if(result.getResult().getType().equals(Material.IRON_HELMET)||result.getResult().getType().equals(Material.IRON_BOOTS)){
+
+//                    System.out.println("PrepareItemCraftEvent: " +result.getResult());
+                    if(player.getLevel()>=8){
+//                        player.setLevel(player.getLevel()-15);
+                    }else{
+                        e.getInventory().setResult(new ItemStack(Material.AIR));
+                        player.sendMessage(ChatColor.RED+"Not enough level to craft this!");
+                    }
+                }else if(result.getResult().getType().equals(Material.IRON_LEGGINGS)){
+                    if(player.getLevel()>=10){
+//                        player.setLevel(player.getLevel()-15);
+                    }else{
+                        e.getInventory().setResult(new ItemStack(Material.AIR));
+                        player.sendMessage(ChatColor.RED+"Not enough level to craft this!");
+                    }
+                }
+                else if(result.getResult().getType().equals(Material.IRON_CHESTPLATE)){
+
+//                    System.out.println("PrepareItemCraftEvent: " +result.getResult());
+                    if(player.getLevel()>=12){
+//                        player.setLevel(player.getLevel()-15);
+                    }else{
+                        e.getInventory().setResult(new ItemStack(Material.AIR));
+                        player.sendMessage(ChatColor.RED+"Not enough level to craft this!");
+                    }
                 }
             }
+
         }
 
 
+
+    }
+
+    @EventHandler
+    public void OnCraftArmors(CraftItemEvent e){
+//        System.out.println("CraftItemEvent: " +e.getResult());
+        Player player= (Player) e.getViewers().get(0);
+        if(typeCheck(player.getUniqueId())){
+            ItemStack result = e.getRecipe().getResult();
+
+            if(result.getType().equals(Material.IRON_HELMET)||result.getType().equals(Material.IRON_BOOTS)){
+
+
+                if(player.getLevel()>=8){
+                    player.setLevel(player.getLevel()-8);
+                }else{
+                    e.getInventory().setResult(new ItemStack(Material.AIR));
+                    player.sendMessage(ChatColor.RED+"Not enough level to craft this!");
+                }
+            }else if(result.getType().equals(Material.IRON_LEGGINGS)){
+                if(player.getLevel()>=10){
+                    player.setLevel(player.getLevel()-10);
+                }else{
+                    e.getInventory().setResult(new ItemStack(Material.AIR));
+                    player.sendMessage(ChatColor.RED+"Not enough level to craft this!");
+                }
+            }
+            else if(result.getType().equals(Material.IRON_CHESTPLATE)){
+
+                if(player.getLevel()>=12){
+                    player.setLevel(player.getLevel()-12);
+                }else{
+                    e.getInventory().setResult(new ItemStack(Material.AIR));
+                    player.sendMessage(ChatColor.RED+"Not enough level to craft this!");
+                }
+            }
+        }
 
     }
 

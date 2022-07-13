@@ -61,6 +61,11 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>dv8tion</id>
+            <name>m2-dv8tion</name>
+            <url>https://m2.dv8tion.net</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -70,5 +75,7 @@
             <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+
     </dependencies>
 </project>

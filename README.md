@@ -1,6 +1,7 @@
 # Age plugin
 ## Contact
->If you need me to create a plugin or have any problems with this one, contact [My discord server][discord]
+>If you need me to create a plugin or have any problems with this one, contact [My discord server][discord] or [My LinkedIn
+][linkedin]
 ## Sections
 - [Age plugin](#age-plugin)
   - [Contact](#contact)
@@ -105,3 +106,4 @@ So, here I apologise for any inconvenience caused by that.
 ---
 
 [discord]: https://discord.com/channels/874340350062362681/874340350062362684
+[linkedin]: https://www.linkedin.com/notifications/

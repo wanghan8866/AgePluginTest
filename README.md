@@ -16,7 +16,7 @@
   - [Issues](#issues)
 ---
 ## About
->This plugin allows the player to join four different teams, each with unique abilities. Also, each team has different colour display in chat and name tag. 
+>This plugin allows the player to join four different teams, each with unique abilities. Also, each team has different colour display in chat and name tag. Moreover, this plugin works properly on a 1.18.2 150-players server.
 ### Teams
    1. Future
       1. fragile
@@ -40,7 +40,7 @@
                1.   Creeper
                2.   Blaze
                3.   Slime
-          4. Plus on forture for meeting some ores  
+          4. Plus one forture for meeting some ores  
              1.  redstone
              2.  lapis
              3.  coal   
